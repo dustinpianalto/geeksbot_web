@@ -1,4 +1,4 @@
-FROM python:3.7-alpine AS geeksbot-web
+FROM python:3.8-alpine AS geeksbot-web
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV PYTHONUNBUFFERED 1
@@ -53,7 +53,7 @@ RUN rm -rf /tmp/*
 RUN mkdir -p /tmp/logs/nginx
 RUN mkdir -p /tmp/logs/geeksbot
 RUN mkdir -p /code/geeksbot_web
-COPY geeksbot_web/* /code/geeksbot_web/
+COPY ./* /code/
 
 WORKDIR /code/geeksbot_web
 

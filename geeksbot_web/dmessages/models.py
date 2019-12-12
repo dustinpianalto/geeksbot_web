@@ -5,10 +5,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.postgres.fields import ArrayField
 from rest_framework import status
 
-from geeksbot_web.guilds.models import Guild
-from geeksbot_web.guilds.models import Role
-from geeksbot_web.users.models import User
-from geeksbot_web.channels.models import Channel
+from guilds.models import Guild
+from guilds.models import Role
+from users.models import User
+from channels.models import Channel
 from .utils import create_error_response
 from .utils import create_success_response
 from .utils import create_request_success_response

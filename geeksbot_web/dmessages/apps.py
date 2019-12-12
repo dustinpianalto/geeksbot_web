@@ -3,5 +3,5 @@ from django.utils.translation import gettext_lazy as _
 
 
 class MessagesConfig(AppConfig):
-    name = 'geeksbot_web.dmessages'
+    name = 'dmessages'
     verbose_name = _("DMessages")

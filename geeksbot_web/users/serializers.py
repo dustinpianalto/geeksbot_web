@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from geeksbot_web.users.models import User
-from geeksbot_web.users.models import UserLog
+from users.models import User
+from users.models import UserLog
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

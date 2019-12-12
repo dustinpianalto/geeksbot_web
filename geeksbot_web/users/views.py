@@ -10,12 +10,12 @@ from rest_framework import status
 
 
 from .models import UserLog
-from geeksbot_web.utils.api_utils import PaginatedAPIView
+from utils.api_utils import PaginatedAPIView
 from .models import User
 from .serializers import UserSerializer
 from .serializers import UserLogSerializer
-from geeksbot_web.utils.permissions import CustomDjangoModelPermissions
-from geeksbot_web.utils.permissions import CustomDjangoObjectPermissions
+from utils.permissions import CustomDjangoModelPermissions
+from utils.permissions import CustomDjangoObjectPermissions
 from .utils import create_error_response
 from .utils import create_success_response
 from .utils import create_log_success_response

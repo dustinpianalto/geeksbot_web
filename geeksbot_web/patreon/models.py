@@ -2,8 +2,8 @@ from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 
-from geeksbot_web.guilds.models import Guild
-from geeksbot_web.guilds.models import Role
+from guilds.models import Guild
+from guilds.models import Role
 from .utils import create_error_response
 from .utils import create_success_creator_response
 from .utils import create_success_tier_response

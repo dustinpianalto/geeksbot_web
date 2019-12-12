@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from geeksbot_web.patreon.models import PatreonCreator
-from geeksbot_web.patreon.models import PatreonTier
+from patreon.models import PatreonCreator
+from patreon.models import PatreonTier
 
 
 class PatreonCreatorSerializer(serializers.ModelSerializer):

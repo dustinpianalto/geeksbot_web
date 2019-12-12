@@ -8,7 +8,7 @@ from .rcon_lib import arcon
 
 from .models import RconServer
 from .utils import create_error_response, create_success_response, create_rcon_response
-from geeksbot_web.utils.api_utils import PaginatedAPIView
+from utils.api_utils import PaginatedAPIView
 from .serializers import RconServerSerializer
 
 # Create your views here.

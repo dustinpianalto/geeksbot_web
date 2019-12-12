@@ -7,16 +7,16 @@ import sys
 
 ROOT_DIR = (
     environ.Path(__file__) - 3
-)  # (geeksbot_web/config/settings/base.py - 3 = geeksbot_web/)
+)  # (config/settings/base.py - 3 = )
 APPS_DIR = ROOT_DIR
 
-CODE_DIR = ( environ.Path(__file__) - 4 )
-sys.path.append(str(CODE_DIR))
+#CODE_DIR = ( environ.Path(__file__) - 4 )
+#sys.path.append(str(CODE_DIR))
 print(sys.path)
 
 env = environ.Env()
 
-READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=True)
+READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(CODE_DIR.path(".env")))
@@ -89,12 +89,12 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "geeksbot_web.users.apps.UsersConfig",
-    "geeksbot_web.guilds.apps.GuildsConfig",
-    "geeksbot_web.dmessages.apps.MessagesConfig",
-    "geeksbot_web.patreon.apps.PatreonConfig",
-    "geeksbot_web.rcon.apps.RconConfig",
-    "geeksbot_web.channels.apps.ChannelsConfig",
+    "users.apps.UsersConfig",
+    "guilds.apps.GuildsConfig",
+    "dmessages.apps.MessagesConfig",
+    "patreon.apps.PatreonConfig",
+    "rcon.apps.RconConfig",
+    "channels.apps.ChannelsConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -103,7 +103,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # MIGRATIONS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
-MIGRATION_MODULES = {"sites": "geeksbot_web.contrib.sites.migrations"}
+MIGRATION_MODULES = {"sites": "contrib.sites.migrations"}
 
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
@@ -276,11 +276,11 @@ ACCOUNT_EMAIL_REQUIRED = False
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_ADAPTER = "geeksbot_web.users.adapters.AccountAdapter"
+ACCOUNT_ADAPTER = "users.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-SOCIALACCOUNT_ADAPTER = "geeksbot_web.users.adapters.SocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "users.adapters.SocialAccountAdapter"
 ACCOUNT_FORMS = {
-    'signup': 'geeksbot_web.users.forms.UserCreateForm',
+    'signup': 'users.forms.UserCreateForm',
 }
 
 

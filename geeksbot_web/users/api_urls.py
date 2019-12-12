@@ -1,6 +1,6 @@
 from django.urls import path
 
-from geeksbot_web.users.views import UsersAPI, UserDetail, UserLogList, UserLogDetail
+from users.views import UsersAPI, UserDetail, UserLogList, UserLogDetail
 
 app_name = "users_api"
 urlpatterns = [

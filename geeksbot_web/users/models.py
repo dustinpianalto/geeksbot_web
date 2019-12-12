@@ -12,7 +12,7 @@ from rest_framework.authtoken.models import Token
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 
-from geeksbot_web.guilds.models import Guild
+from guilds.models import Guild
 from .utils import verify_user_data
 from .utils import create_error_response
 from .utils import create_log_success_response

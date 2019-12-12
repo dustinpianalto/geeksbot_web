@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from geeksbot_web.guilds.models import Guild
-from geeksbot_web.guilds.models import Role
+from guilds.models import Guild
+from guilds.models import Role
 
 
 class GuildSerializer(serializers.ModelSerializer):

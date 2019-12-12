@@ -2,10 +2,10 @@ from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 
-from geeksbot_web.guilds.models import Guild
-from geeksbot_web.dmessages.models import Message
-from geeksbot_web.users.models import User
-from geeksbot_web.channels.models import Channel
+from guilds.models import Guild
+from dmessages.models import Message
+from users.models import User
+from channels.models import Channel
 from .utils import create_error_response
 from .utils import create_success_response
 

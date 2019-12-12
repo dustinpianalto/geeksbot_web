@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from django.core.exceptions import ObjectDoesNotExist
 
-from geeksbot_web.utils.api_utils import PaginatedAPIView
+from utils.api_utils import PaginatedAPIView
 from .models import Channel
 from .utils import create_error_response
 from .utils import create_success_response

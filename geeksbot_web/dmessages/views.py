@@ -13,7 +13,7 @@ from .models import Message
 from .models import AdminComment
 from .models import AdminRequest
 from .models import GuildInfo
-from geeksbot_web.utils.api_utils import PaginatedAPIView
+from utils.api_utils import PaginatedAPIView
 from .utils import create_error_response
 from .utils import create_success_response
 from .utils import create_request_success_response

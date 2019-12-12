@@ -13,14 +13,14 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
-    path("users/", include("geeksbot_web.users.urls", namespace="users")),
+    path("users/", include("users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-    path("api/users/", include("geeksbot_web.users.api_urls", namespace="users_api")),
-    path("api/guilds/", include("geeksbot_web.guilds.api_urls", namespace="guilds_api")),
-    path("api/channels/", include("geeksbot_web.channels.api_urls", namespace="channels_api")),
-    path("api/messages/", include("geeksbot_web.dmessages.api_urls", namespace="messages_api")),
-    path("api/rcon/", include("geeksbot_web.rcon.api_urls", namespace="rcon_api")),
+    path("api/users/", include("users.api_urls", namespace="users_api")),
+    path("api/guilds/", include("guilds.api_urls", namespace="guilds_api")),
+    path("api/channels/", include("channels.api_urls", namespace="channels_api")),
+    path("api/messages/", include("dmessages.api_urls", namespace="messages_api")),
+    path("api/rcon/", include("rcon.api_urls", namespace="rcon_api")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
