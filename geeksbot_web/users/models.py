@@ -1,5 +1,4 @@
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db.models import CharField
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -17,6 +16,7 @@ from .utils import verify_user_data
 from .utils import create_error_response
 from .utils import create_log_success_response
 from .utils import create_success_response
+from .validators import CustomUsernameValidator
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -35,7 +35,7 @@ class User(AbstractUser):
         max_length=150,
         unique=False,
         help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
-        validators=[UnicodeUsernameValidator()],
+        validators=[CustomUsernameValidator()],
     )
     id = models.CharField(max_length=30, primary_key=True)
     discord_username = models.CharField(max_length=100, null=True)
