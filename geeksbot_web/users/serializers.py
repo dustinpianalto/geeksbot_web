@@ -38,11 +38,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     def update(self, instance, validated_data):
         if 'username' in validated_data and instance.username != validated_data['username']:
-            prev_usernames = set(instance.previous_usernames)
+            prev_usernames = set(instance.previous_usernames or [])
             prev_usernames.add(instance.username)
             validated_data['previous_usernames'] = list(prev_usernames)
         if 'discriminator' in validated_data and instance.discriminator != validated_data['discriminator']:
-            prev_discrims = set(instance.previous_discriminators)
+            prev_discrims = set(instance.previous_discriminators or [])
             prev_discrims.add(instance.discriminator)
             validated_data['previous_discriminators'] = list(prev_discrims)
         super(UserSerializer, self).update(instance, validated_data)
