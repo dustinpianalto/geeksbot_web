@@ -45,7 +45,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             prev_discrims = set(instance.previous_discriminators or [])
             prev_discrims.add(instance.discriminator)
             validated_data['previous_discriminators'] = list(prev_discrims)
-        super(UserSerializer, self).update(instance, validated_data)
+        return super(UserSerializer, self).update(instance, validated_data)
 
 
 class UserLogSerializer(serializers.ModelSerializer):
