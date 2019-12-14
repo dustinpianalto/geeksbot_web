@@ -32,14 +32,13 @@ class User(AbstractUser):
     name = CharField(_("Name of User"), blank=True, max_length=255)
     username = models.CharField(
         _('username'),
-        max_length=150,
+        max_length=32,
         unique=False,
-        help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+        help_text=_('Required. 32 characters or fewer. Any character allowed by Discord.'),
         validators=[CustomUsernameValidator()],
     )
     id = models.CharField(max_length=30, primary_key=True)
-    discord_username = models.CharField(max_length=100, null=True)
-    previous_discord_usernames = ArrayField(models.CharField(max_length=100), blank=True, null=True)
+    previous_usernames = ArrayField(models.CharField(max_length=100), blank=True, null=True)
     discriminator = models.CharField(max_length=4, null=True)
     previous_discriminators = ArrayField(models.CharField(max_length=4), blank=True, null=True)
     guilds = models.ManyToManyField(Guild, blank=True, null=True)
@@ -60,7 +59,7 @@ class User(AbstractUser):
             if User.objects.filter(id=id).exists():
                 return create_error_response("User Exists please update instead of create",
                                              status=status.HTTP_409_CONFLICT)
-        discord_username = data.get('username')
+        username = data.get('username')
         discriminator = data.get('discriminator')
         guild_id = data.get('guild')
         try:
@@ -79,7 +78,7 @@ class User(AbstractUser):
 
         user = User(
             id=id,
-            discord_username=discord_username,
+            username=username,
             discriminator=discriminator,
             animated=animated,
             avatar=avatar,
