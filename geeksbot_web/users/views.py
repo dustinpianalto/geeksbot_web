@@ -104,7 +104,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def partial_update(self, request, *args, **kwargs):
         kwargs['partial'] = True
-        guilds = request.date.pop('guilds', [])
+        guilds = request.data.pop('guilds', [])
         if guilds:
             instance = self.get_object()
             instance.guilds.remove(*guilds)
