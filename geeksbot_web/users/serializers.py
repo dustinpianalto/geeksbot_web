@@ -46,12 +46,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             prev_discrims.add(instance.discriminator)
             validated_data['previous_discriminators'] = list(prev_discrims)
         if 'guilds' in validated_data:
-            for guild in validated_data['guilds']:
-                if guild.startswith('-'):
-                    guild = guild[1:]
-                    instance.guilds.remove(guild)
-                else:
-                    instance.guilds.add(guild)
+            guilds = validated_data['guilds']
+            instance.guilds.add(*guilds)
         return super(UserSerializer, self).update(instance, validated_data)
 
 
