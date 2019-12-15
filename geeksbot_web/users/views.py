@@ -102,6 +102,14 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return User.objects.all()
 
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        guilds = request.date.pop('guilds', [])
+        if guilds:
+            instance = self.get_object()
+            instance.guilds.remove(*guilds)
+        return self.update(request, *args, **kwargs)
+
     # def get(self, request, id, format=None):
     #     user = User.get_user_by_id(id)
     #     if not isinstance(user, User):
