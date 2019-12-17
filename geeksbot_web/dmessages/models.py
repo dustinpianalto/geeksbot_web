@@ -97,9 +97,9 @@ class Message(models.Model):
 
     def update_message(self, data):
         if data.get('modified_at'):
-            self.modified_at = datetime.fromtimestamp(int(data.get('modified_at')))
+            self.modified_at = datetime.fromtimestamp(int(data.get('modified_at')), tz=timezone.utc)
         if data.get('deleted_at'):
-            self.deleted_at = datetime.fromtimestamp(int(data.get('deleted_at')))
+            self.deleted_at = datetime.fromtimestamp(int(data.get('deleted_at')), tz=timezone.utc)
         if data.get('content'):
             content = data.get('content')
             if content != self.content:
