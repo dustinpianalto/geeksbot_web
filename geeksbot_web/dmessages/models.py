@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
@@ -61,7 +61,7 @@ class Message(models.Model):
         if not isinstance(channel, Channel):
             return create_error_response("Channel Does Not Exist",
                                          status=status.HTTP_404_NOT_FOUND)
-        created_at = datetime.fromtimestamp(created_at)
+        created_at = datetime.fromtimestamp(created_at, tz=timezone.utc)
 
         message = cls(
             id=id,
