@@ -63,10 +63,7 @@ class ListPlayers(PaginatedAPIView):
             connected = ark.connect()
             if connected == 1:
                 resp = ark.listplayers()
-                if resp == 'No Players Connected':
-                    return create_rcon_response(resp, status=status.HTTP_204_NO_CONTENT)
-                else:
-                    return create_rcon_response(resp, status=status.HTTP_200_OK)
+                return create_rcon_response(resp, status=status.HTTP_200_OK)
             else:
                 return create_error_response('Connection failure',
                                              status=status.HTTP_500_INTERNAL_SERVER_ERROR)
