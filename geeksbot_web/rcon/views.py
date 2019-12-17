@@ -10,6 +10,7 @@ from .models import RconServer
 from .utils import create_error_response, create_success_response, create_rcon_response
 from utils.api_utils import PaginatedAPIView
 from .serializers import RconServerSerializer
+from users.models import User
 
 # Create your views here.
 
@@ -70,3 +71,25 @@ class ListPlayers(PaginatedAPIView):
 
         return create_error_response('RCON Server Does Not Exist',
                                      status=status.HTTP_404_NOT_FOUND)
+
+
+class WhitelistAPI(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, guild_id, name, format=None):
+        discord_id = request.data.get('discord_id')
+        if not discord_id:
+            return create_error_response("A Discord ID is required",
+                                         status=status.HTTP_400_BAD_REQUEST)
+        user = User.get_user_by_id(discord_id)
+        server: RconServer = RconServer.get_server(guild_id, name)
+        if not server:
+            return create_error_response('RCON Server Does Not Exist',
+                                         status=status.HTTP_404_NOT_FOUND)
+        ark = arcon.ARKServer(host=server.ip, port=server.port, password=server.password)
+        connected = ark.connect()
+        if not connected == 1:
+            return create_error_response('Connection Failure',
+                                         status=status.HTTP_408_REQUEST_TIMEOUT)
+        resp = ark.whitelist(user.steam_id)
+        return create_rcon_response(resp, status=status.HTTP_200_OK)
