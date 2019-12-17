@@ -82,6 +82,9 @@ class WhitelistAPI(APIView):
             return create_error_response("A Discord ID is required",
                                          status=status.HTTP_400_BAD_REQUEST)
         user = User.get_user_by_id(discord_id)
+        if not user.steam_id:
+            return create_error_response('The User must have a Steam ID in the database in order to whitelist them.',
+                                         status=status.HTTP_400_BAD_REQUEST)
         server: RconServer = RconServer.get_server(guild_id, name)
         if not server:
             return create_error_response('RCON Server Does Not Exist',
