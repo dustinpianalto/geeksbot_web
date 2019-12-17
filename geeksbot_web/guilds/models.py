@@ -125,6 +125,13 @@ class Role(models.Model):
     @classmethod
     def get_admin_roles(cls, guild_id):
         try:
+            return cls.get_guild_roles(guild_id).filter(role_type__gte=95)
+        except ObjectDoesNotExist:
+            return None
+
+    @classmethod
+    def get_moderator_roles(cls, guild_id):
+        try:
             return cls.get_guild_roles(guild_id).filter(role_type__gte=90)
         except ObjectDoesNotExist:
             return None
