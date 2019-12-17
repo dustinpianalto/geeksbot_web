@@ -66,6 +66,7 @@ class RCONConnection:
         try:
             rcon_log.debug(f'Connecting to {self.host}:{self.port}...')
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.socket.settimeout(3)
             self.socket.connect((self.host, self.port))
         except TimeoutError as e:
             rcon_log.error(f'Timeout error: {e}')
