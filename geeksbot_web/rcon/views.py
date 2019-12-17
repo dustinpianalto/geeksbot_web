@@ -8,7 +8,7 @@ from .rcon_lib import arcon
 
 from .models import RconServer
 from .utils import create_error_response, create_success_response, create_rcon_response
-from utils.api_utils import PaginatedAPIView
+from geeksbot_web.utils.api_utils import PaginatedAPIView
 from .serializers import RconServerSerializer
 
 # Create your views here.
@@ -59,13 +59,10 @@ class ListPlayers(PaginatedAPIView):
     def get(self, request, guild_id, name, format=None):
         server: RconServer = RconServer.get_server(guild_id, name)
         if server:
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-            loop = asyncio.get_event_loop()
             ark = arcon.ARKServer(host=server.ip, port=server.port, password=server.password, loop=loop)
-            connected = loop.run_until_complete(ark.connect())
+            connected = ark.connect()
             if connected == 1:
-                resp = loop.run_until_complete(ark.listplayers())
+                resp = ark.listplayers()
                 if resp == 'No Players Connected':
                     return create_rcon_response(resp, status=status.HTTP_204_NO_CONTENT)
                 else:
