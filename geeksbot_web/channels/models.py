@@ -38,10 +38,11 @@ class Channel(models.Model):
     @classmethod
     def add_new_channel(cls, data):
         id = data.get('id')
-        if id and cls.get_channel_by_id(id):
+        guild_id = data.get('guild')
+
+        if id and cls.get_channel_by_id(guild_id, id):
             return create_error_response('Channel Already Exists',
                                          status=status.HTTP_409_CONFLICT)
-        guild_id = data.get('guild')
         if not (id and guild_id):
             return create_error_response('ID and Guild are required',
                                          status=status.HTTP_400_BAD_REQUEST)
