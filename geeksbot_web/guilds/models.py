@@ -79,14 +79,14 @@ class Role(models.Model):
     def add_new_role(cls, guild_id, data):
         id = data.get('id')
         role_type = data.get('role_type')
+        guild = Guild.get_guild_by_id(guild_id)
         if not (id and guild_id and (role_type is not None)):
             return create_error_response("The Role ID, Guild, and Role Type are required",
                                          status=status.HTTP_400_BAD_REQUEST)
 
-        if cls.get_role_by_id(id):
+        if cls.get_role_by_id(guild_id, id):
             return create_error_response("That Role Already Exists",
                                          status=status.HTTP_409_CONFLICT)
-        guild = Guild.get_guild_by_id(guild_id)
         if not isinstance(guild, Guild):
             return create_error_response("Guild Does Not Exist",
                                          status=status.HTTP_404_NOT_FOUND)
