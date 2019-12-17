@@ -59,7 +59,7 @@ class ListPlayers(PaginatedAPIView):
     def get(self, request, guild_id, name, format=None):
         server: RconServer = RconServer.get_server(guild_id, name)
         if server:
-            ark = arcon.ARKServer(host=server.ip, port=server.port, password=server.password, loop=loop)
+            ark = arcon.ARKServer(host=server.ip, port=server.port, password=server.password)
             connected = ark.connect()
             if connected == 1:
                 resp = ark.listplayers()
