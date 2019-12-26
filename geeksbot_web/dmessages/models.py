@@ -83,7 +83,7 @@ class Message(models.Model):
         if data.get('tagged_roles'):
             tagged_roles = data.get('tagged_roles')
             for role_id in tagged_roles:
-                role = Role.get_role_by_id(role_id)
+                role = Role.get_role_by_id(guild_id, role_id)
                 if role:
                     message.tagged_roles.add(role)
         if data.get('tagged_channels'):
