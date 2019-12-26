@@ -3,8 +3,8 @@ FROM python:3.8-alpine AS geeksbot-web
 ENV DEBIAN_FRONTEND noninteractive
 ENV PYTHONUNBUFFERED 1
 
-RUN adduser --disabled-password --home=/home/geeksbot --gecos "" geeksbot
-RUN echo "geeksbot ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN adduser --disabled-password --home /home/geeksbot --gecos "" geeksbot
+RUN echo "geeksbot ALL (ALL) NOPASSWD: ALL" >> /etc/sudoers
 RUN echo "geeksbot:docker" | chpasswd
 
 RUN apk update && \
@@ -32,9 +32,10 @@ RUN apk update && apk add nginx && apk add supervisor
 
 COPY requirements/base.txt .
 COPY requirements/production.txt .
-COPY requirements/web.txt .
 
 RUN pip install -r production.txt
+
+COPY requirements/web.txt .
 RUN pip install -r web.txt
 
 RUN rm -f /etc/nginx/sites-enabled/default
@@ -59,6 +60,31 @@ WORKDIR /code/geeksbot_web
 
 # RUN sed -i 's/\r$//g' ./entrypoint
 # RUN chmod +x ./entrypoint
+
+# PostgreSQL DB Connection Info
+ENV POSTGRES_HOST geeksbot-db.c3omjx35ryzn.us-east-1.rds.amazonaws.com
+ENV POSTGRES_DB geeksbot
+ENV POSTGRES_PORT 5432
+ENV POSTGRES_USER postgres
+ENV CONN_MAX_AGE 0
+# Redis Connection Info
+ENV REDIS_DB 0
+ENV REDIS_ENABLED true
+ENV REDIS_HOST geeksbot-redis
+ENV REDIS_PORT 6379
+
+
+ENV USE_DOCKER yes
+# Django
+ENV DJANGO_SETTINGS_MODULE config.settings.production
+ENV DJANGO_ALLOWED_HOSTS .geeksbot.app,localhost
+ENV DJANGO_SECURE_SSL_REDIRECT False
+ENV DJANGO_ACCOUNT_ALLOW_REGISTRATION True
+# Email
+ENV DJANGO_SERVER_EMAIL geeksbot@geeksbot.app
+ENV MAILGUN_DOMAIN mail.geeksbot.app
+# Gunicorn
+ENV WEB_CONCURRENCY 4
 
 EXPOSE 80 8000 443
 

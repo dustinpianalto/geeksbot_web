@@ -4,22 +4,16 @@ Base settings to build other settings files upon.
 
 import environ
 import sys
+import redis
 
 ROOT_DIR = (
     environ.Path(__file__) - 3
 )  # (config/settings/base.py - 3 = )
 APPS_DIR = ROOT_DIR
 
-#CODE_DIR = ( environ.Path(__file__) - 4 )
-#sys.path.append(str(CODE_DIR))
-print(sys.path)
-
 env = environ.Env()
 
-READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
-if READ_DOT_ENV_FILE:
-    # OS environment variables take precedence over variables from .env
-    env.read_env(str(CODE_DIR.path(".env")))
+settings_cache = redis.Redis(host=env.str('REDIS_HOST'), port=env.str('REDIS_PORT'), db=1, charset="utf-8", decode_responses=True)
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -51,7 +45,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': env.str("POSTGRES_DB"),
         'USER': env.str('POSTGRES_USER'),
-        'PASSWORD': env.str('POSTGRES_PASSWORD'),
+        'PASSWORD': settings_cache.get('POSTGRES_PASSWORD'),
         'HOST': env.str('POSTGRES_HOST'),
         'PORT': env.str('POSTGRES_PORT')
     }

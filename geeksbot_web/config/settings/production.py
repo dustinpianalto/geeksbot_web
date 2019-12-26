@@ -4,7 +4,7 @@ from .base import env
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = env("DJANGO_SECRET_KEY")
+SECRET_KEY = settings_cache.get('DJANGO_SECRET_KEY')
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["geeksbot.app"])
 
@@ -86,7 +86,7 @@ EMAIL_SUBJECT_PREFIX = env(
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL regex.
-ADMIN_URL = env("DJANGO_ADMIN_URL")
+ADMIN_URL = settings_cache.get('DJANGO_ADMIN_URL')
 
 # Anymail (Mailgun)
 # ------------------------------------------------------------------------------
@@ -95,7 +95,7 @@ INSTALLED_APPS += ["anymail"]  # noqa F405
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 # https://anymail.readthedocs.io/en/stable/installation/#anymail-settings-reference
 ANYMAIL = {
-    "MAILGUN_API_KEY": env("MAILGUN_API_KEY"),
+    "MAILGUN_API_KEY": settings_cache.get('MAILGUN_API_KEY'),
     "MAILGUN_SENDER_DOMAIN": env("MAILGUN_DOMAIN"),
     "MAILGUN_API_URL": env("MAILGUN_API_URL", default="https://api.mailgun.net/v3"),
 }
