@@ -30,13 +30,14 @@ WORKDIR /code
 
 RUN apk update && apk add nginx && apk add supervisor
 
-COPY requirements/base.txt .
-COPY requirements/production.txt .
+RUN mkdir requirements
 
-RUN pip install -r production.txt
+COPY requirements/base.txt requirements/base.txt
+COPY requirements/production.txt requirements/production.txt
+RUN pip install -r requirements/production.txt
 
-COPY requirements/web.txt .
-RUN pip install -r web.txt
+COPY requirements/web.txt requirements/web.txt
+RUN pip install -r requirements/web.txt
 
 RUN rm -f /etc/nginx/sites-enabled/default
 RUN rm -f /etc/nginx/conf.d/default.conf
@@ -53,12 +54,6 @@ RUN rm -rf /tmp/*
 RUN mkdir -p /tmp/logs/nginx
 RUN mkdir -p /tmp/logs/geeksbot
 RUN mkdir -p /code/geeksbot_web
-COPY ./* /code/
-
-WORKDIR /code/geeksbot_web
-
-# RUN sed -i 's/\r$//g' ./entrypoint
-# RUN chmod +x ./entrypoint
 
 # PostgreSQL DB Connection Info
 ENV POSTGRES_HOST geeksbot-db.c3omjx35ryzn.us-east-1.rds.amazonaws.com
@@ -86,5 +81,7 @@ ENV MAILGUN_DOMAIN mail.geeksbot.app
 ENV WEB_CONCURRENCY 4
 
 EXPOSE 80 8000 443
+
+COPY entrypoint .
 
 ENTRYPOINT [ "./entrypoint" ]
