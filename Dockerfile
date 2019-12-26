@@ -47,7 +47,6 @@ COPY ./services/supervisord.conf /etc/supervisor/supervisord.conf
 COPY ./services/supervisor_geeksbot.conf /etc/supervisor/conf.d/geeksbot.conf
 COPY ./ssl_certs/geeksbot_app/geeksbot_app_cert_chain.crt /etc/ssl/geeksbot_app_cert_chain.crt
 COPY ./ssl_certs/geeksbot_app/geeksbot.app.key /etc/ssl/geeksbot.app.key
-COPY ./.env /code/
 
 RUN rm -rf /tmp/*
 
