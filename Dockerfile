@@ -69,7 +69,7 @@ ENV CONN_MAX_AGE 0
 # Redis Connection Info
 ENV REDIS_DB 0
 ENV REDIS_ENABLED true
-ENV REDIS_HOST geeksbot-redis
+ENV REDIS_HOST redis.geeksbot.com
 ENV REDIS_PORT 6379
 
 
