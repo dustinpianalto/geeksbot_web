@@ -1,5 +1,6 @@
 from .base import *  # noqa
 from .base import env
+from socket import gethostname, gethostbyname
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -7,6 +8,7 @@ from .base import env
 SECRET_KEY = settings_cache.get('DJANGO_SECRET_KEY')
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["geeksbot.app"])
+ALLOWED_HOSTS.extend([gethostname(), gethostbyname(gethostname())])
 
 # DATABASES
 # ------------------------------------------------------------------------------
