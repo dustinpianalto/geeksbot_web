@@ -49,8 +49,9 @@ class MessageDetailAPI(APIView):
         if message:
             return create_success_response(message, status.HTTP_200_OK, many=False)
         else:
-            return create_error_response("Message Does Not Exist",
-                                         status=status.HTTP_404_NOT_FOUND)
+            return create_error_response(
+                "Message Does Not Exist", status=status.HTTP_404_NOT_FOUND
+            )
 
     def put(self, request, id, format=None):
         data = dict(request.data)
@@ -58,8 +59,9 @@ class MessageDetailAPI(APIView):
         if message:
             return message.update_message(data)
         else:
-            return create_error_response('Message Does Not Exist',
-                                         status=status.HTTP_404_NOT_FOUND)
+            return create_error_response(
+                "Message Does Not Exist", status=status.HTTP_404_NOT_FOUND
+            )
 
 
 class WaitForMessageAPI(APIView):
@@ -72,8 +74,10 @@ class WaitForMessageAPI(APIView):
             sleep(0.1)
             try_count += 1
             if try_count > timeout * 10:
-                return create_error_response("Timeout reached before message is available.",
-                                             statu=status.HTTP_404_NOT_FOUND)
+                return create_error_response(
+                    "Timeout reached before message is available.",
+                    status=status.HTTP_404_NOT_FOUND,
+                )
             message = Message.get_message_by_id(id)
         return create_success_response(message, status=status.HTTP_200_OK)
 
@@ -87,7 +91,9 @@ class RequestsAPI(PaginatedAPIView):
         if page is not None:
             return create_request_success_response(page, status.HTTP_200_OK, many=True)
         if requests:
-            return create_request_success_response(requests, status.HTTP_200_OK, many=True)
+            return create_request_success_response(
+                requests, status.HTTP_200_OK, many=True
+            )
         return create_error_response("No requests found")
 
     def post(self, request, guild_id, format=None):
@@ -104,7 +110,9 @@ class UserRequestsAPI(PaginatedAPIView):
         if page is not None:
             return create_request_success_response(page, status.HTTP_200_OK, many=True)
         if requests:
-            return create_request_success_response(requests, status.HTTP_200_OK, many=True)
+            return create_request_success_response(
+                requests, status.HTTP_200_OK, many=True
+            )
         return create_error_response("No requests found")
 
 
@@ -117,27 +125,31 @@ class RequestDetailAPI(APIView):
             comments = AdminComment.get_comments_by_request(req)
             if comments:
                 data = AdminRequestSerializer(req).data
-                data['comments'] = AdminCommentSerializer(comments, many=True).data
+                data["comments"] = AdminCommentSerializer(comments, many=True).data
                 return Response(data, status.HTTP_200_OK)
             else:
-                return create_request_success_response(req, status.HTTP_200_OK, many=False)
+                return create_request_success_response(
+                    req, status.HTTP_200_OK, many=False
+                )
         else:
-            return create_error_response("That Request Does Not Exist",
-                                         status=status.HTTP_404_NOT_FOUND)
+            return create_error_response(
+                "That Request Does Not Exist", status=status.HTTP_404_NOT_FOUND
+            )
 
     def put(self, request, guild_id, request_id, format=None):
         req = AdminRequest.get_open_request_by_id(guild_id, request_id)
         if req:
             data = dict(request.data)
             return req.update_request(data)
-        return create_error_response("That Request Does Not Exist",
-                                     status=status.HTTP_404_NOT_FOUND)
+        return create_error_response(
+            "That Request Does Not Exist", status=status.HTTP_404_NOT_FOUND
+        )
 
     def delete(self, request, guild_id, request_id, format=None):
         data = dict(request.data)
         request = AdminRequest.get_open_request_by_id(guild_id, request_id)
-        data['completed'] = True
-        data['completed_at'] = datetime.utcnow()
+        data["completed"] = True
+        data["completed_at"] = datetime.utcnow()
         return request.update_request(data)
 
 
@@ -147,7 +159,9 @@ class CommentsAPI(PaginatedAPIView):
     def get(self, request, guild_id, request_id, format=None):
         comments = AdminComment.get_comments_by_request(request_id)
         if comments:
-            return create_comment_success_response(comments, status=status.HTTP_200_OK, many=True)
+            return create_comment_success_response(
+                comments, status=status.HTTP_200_OK, many=True
+            )
         return create_error_response("No Comments found")
 
     def post(self, request, guild_id, request_id, format=None):
@@ -172,9 +186,14 @@ class CommentDetailAPI(APIView):
         comment = AdminComment.get_comment_by_id(comment_id)
         if comment:
             if comment.request.id != request_id:
-                return create_error_response("That comment is not for this request",
-                                             status=status.HTTP_400_BAD_REQUEST)
-            return create_comment_success_response(comment, status.HTTP_200_OK, many=False)
+                return create_error_response(
+                    "That comment is not for this request",
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            return create_comment_success_response(
+                comment, status.HTTP_200_OK, many=False
+            )
         else:
-            return create_error_response("Comment Does Not Exist",
-                                         status=status.HTTP_404_NOT_FOUND)
+            return create_error_response(
+                "Comment Does Not Exist", status=status.HTTP_404_NOT_FOUND
+            )
