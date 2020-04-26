@@ -17,6 +17,6 @@ coreapi  # https://github.com/core-api/python-client
 gevent
 gunicorn  # https://github.com/benoitc/gunicorn
 psycopg2 --no-binary psycopg2  # https://github.com/psycopg/psycopg2
-Collectfast  # https://github.com/antonagestam/collectfast
+# Collectfast  # https://github.com/antonagestam/collectfast
 
 python-valve
