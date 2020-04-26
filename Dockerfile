@@ -8,7 +8,7 @@ RUN echo "geeksbot ALL (ALL) NOPASSWD: ALL" >> /etc/sudoers
 RUN echo "geeksbot:docker" | chpasswd
 
 RUN apk update && \
-        apk add --virtual build-deps gcc python3-dev musl-dev postgresql-dev \
+        apk add gcc python3-dev musl-dev postgresql-dev \
         # Pillow dependencies
         && apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev \
         # CFFI dependencies
@@ -16,7 +16,7 @@ RUN apk update && \
         # Translations dependencies
         && apk add gettext \
         # https://docs.djangoproject.com/en/dev/ref/django-admin/#dbshell
-        && apk add postgresql-client
+        && apk add postgresql-client make
 
 RUN mkdir /code
 
