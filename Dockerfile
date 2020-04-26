@@ -16,7 +16,7 @@ RUN apk update && \
         # Translations dependencies
         && apk add gettext \
         # https://docs.djangoproject.com/en/dev/ref/django-admin/#dbshell
-        && apk add postgresql-client make
+        && apk add postgresql-client make git
 
 RUN mkdir /code
 
