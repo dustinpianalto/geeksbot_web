@@ -120,7 +120,7 @@ class RequestDetailAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, req, guild_id, request_id, format=None):
-        req = AdminRequest.get_open_request_by_id(guild_id, request_id)
+        req = AdminRequest.get_request_by_id(guild_id, request_id)
         if req:
             comments = AdminComment.get_comments_by_request(req)
             if comments:

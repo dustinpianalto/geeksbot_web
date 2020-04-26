@@ -235,9 +235,13 @@ class AdminRequest(models.Model):
         return cls.objects.filter(guild__id=guild_id).filter(completed=False)
 
     @classmethod
-    def get_open_request_by_id(cls, guild_id, request_id):
+    def get_requests_by_guild(cls, guild_id):
+        return cls.objects.filter(guild__id=guild_id)
+
+    @classmethod
+    def get_request_by_id(cls, guild_id, request_id):
         try:
-            return cls.get_open_requests_by_guild(guild_id).get(id=request_id)
+            return cls.get_requests_by_guild(guild_id).get(id=request_id)
         except ObjectDoesNotExist:
             return None
 
