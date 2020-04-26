@@ -137,7 +137,7 @@ class RequestDetailAPI(APIView):
             )
 
     def put(self, request, guild_id, request_id, format=None):
-        req = AdminRequest.get_open_request_by_id(guild_id, request_id)
+        req = AdminRequest.get_request_by_id(guild_id, request_id)
         if req:
             data = dict(request.data)
             return req.update_request(data)
@@ -147,7 +147,7 @@ class RequestDetailAPI(APIView):
 
     def delete(self, request, guild_id, request_id, format=None):
         data = dict(request.data)
-        request = AdminRequest.get_open_request_by_id(guild_id, request_id)
+        request = AdminRequest.get_request_by_id(guild_id, request_id)
         data["completed"] = True
         data["completed_at"] = datetime.utcnow()
         return request.update_request(data)
