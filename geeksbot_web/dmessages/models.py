@@ -266,7 +266,7 @@ class AdminComment(models.Model):
         if not (request_id and author_id and content):
             return create_error_response('Request, Author, and Content are required fields',
                                          status=status.HTTP_400_BAD_REQUEST)
-        request = AdminRequest.get_open_request_by_id(guild_id, request_id)
+        request = AdminRequest.get_request_by_id(guild_id, request_id)
         if not isinstance(request, AdminRequest):
             return create_error_response("Admin Request Does Not Exist",
                                          status=status.HTTP_404_NOT_FOUND)
