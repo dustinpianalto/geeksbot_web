@@ -96,3 +96,24 @@ class WhitelistAPI(APIView):
                                          status=status.HTTP_408_REQUEST_TIMEOUT)
         resp = ark.whitelist(user.steam_id)
         return create_rcon_response(resp, status=status.HTTP_200_OK)
+
+
+class BroadcastAPI(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, guild_id, name, format=None):
+        message = request.data.get('message')
+        if not message:
+            return create_error_response('A message is required',
+                                         status=status.HTTP_400_BAD_REQUEST)
+        server: RconServer = RconServer.get_server(guild_id, name)
+        if not server:
+            return create_error_response('RCON Server Does Not Exist',
+                                         status=status.HTTP_404_NOT_FOUND)
+        ark = arcon.ARKServer(host=server.ip, port=server.port, password=server.password)
+        connected = ark.connect()
+        if not connected == 1:
+            return create_error_response('Connection Failure',
+                                         status=status.HTTP_408_REQUEST_TIMEOUT)
+        resp = ark.broadcast(message)
+        return create_rcon_response(resp, status=status.HTTP_200_OK)
